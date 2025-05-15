@@ -7,18 +7,18 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember_me = BooleanField("Remember Me")
-    submit = SubmitField("Sign In")
+    username = StringField("Никнейм", validators=[DataRequired()])
+    password = PasswordField("Пороль", validators=[DataRequired()])
+    remember_me = BooleanField("Запомнить меня")
+    submit = SubmitField("Войти")
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField("Никнейм", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    password = PasswordField("Пороль", validators=[DataRequired()])
     password2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
+        "Повторите пороль", validators=[DataRequired(), EqualTo("password")]
     )
     submit = SubmitField("Register")
 
@@ -34,9 +34,9 @@ class RegistrationForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    about_me = TextAreaField("About me", validators=[Length(min=0, max=140)])
-    submit = SubmitField("Submit")
+    username = StringField("Никнейм", validators=[DataRequired()])
+    about_me = TextAreaField("Обо мне", validators=[Length(min=0, max=140)])
+    submit = SubmitField("Подтвердить")
 
     def __init__(self, original_username, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -48,8 +48,8 @@ class EditProfileForm(FlaskForm):
                 sa.select(User).where(User.username == username.data)
             )
             if user is not None:
-                raise ValidationError("Please use a diffrent username.")
+                raise ValidationError("Это имя занято.")
 
 
 class EmptyForm(FlaskForm):
-    submit = SubmitField("Submit")
+    submit = SubmitField("Подтвердить")
